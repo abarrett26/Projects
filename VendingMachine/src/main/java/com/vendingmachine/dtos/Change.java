@@ -7,7 +7,7 @@ package com.vendingmachine.dtos;
 
 /**
  *
- * @author dsmelser
+ * @author alexbarrett
  */
 public class Change {
     private int dollars;

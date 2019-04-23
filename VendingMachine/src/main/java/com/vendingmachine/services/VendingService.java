@@ -22,7 +22,7 @@ import org.springframework.stereotype.Service;
 
 /**
  *
- * @author dsmelser
+ * @author alexbarrett
  */
 @Service
 public class VendingService {

@@ -7,7 +7,7 @@ package com.goblinbattle;
 
 /**
  *
- * @author dsmelser
+ * @author alexbarrett
  */
 public class Goblin {
     //field variables

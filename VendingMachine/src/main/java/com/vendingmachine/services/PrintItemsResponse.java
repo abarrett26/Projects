@@ -10,7 +10,7 @@ import java.util.List;
 
 /**
  *
- * @author dsmelser
+ * @author alexbarrett
  */
 public class PrintItemsResponse extends Response {
     private List<Item> allItems;

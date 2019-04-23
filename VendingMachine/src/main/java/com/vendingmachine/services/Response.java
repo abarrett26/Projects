@@ -7,7 +7,7 @@ package com.vendingmachine.services;
 
 /**
  *
- * @author dsmelser
+ * @author alexbarrett
  */
 public abstract class Response {
     

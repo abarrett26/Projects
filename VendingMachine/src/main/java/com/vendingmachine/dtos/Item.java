@@ -11,7 +11,7 @@ import java.math.RoundingMode;
 
 /**
  *
- * @author dsmelser
+ * @author alexbarrett
  */
 public class Item {
     private int id;

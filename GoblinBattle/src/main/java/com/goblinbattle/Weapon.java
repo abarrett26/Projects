@@ -7,7 +7,7 @@ package com.goblinbattle;
 
 /**
  *
- * @author dsmelser
+ * @author alexbarrett
  */
 public class Weapon {
     private String name;

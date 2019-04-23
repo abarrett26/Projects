@@ -31,7 +31,7 @@ import javax.sql.DataSource;
 ​
 /**
  *
- * @author 16128
+ * @author alexbarrett
  */
 public class DatabaseDao implements VendingDao {
   DataSource source;

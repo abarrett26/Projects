@@ -9,7 +9,7 @@ import java.math.BigDecimal;
 
 /**
  *
- * @author dsmelser
+ * @author alexbarrett
  */
 public interface UserIO {
     public void print( String prompt );
