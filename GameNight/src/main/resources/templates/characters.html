@@ -1,0 +1,230 @@
+<!doctype html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+    <head>
+        <!-- Required meta tags -->
+        <meta charset="utf-8">
+            <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+                <!-- Bootstrap CSS -->
+                <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+                    <link rel="stylesheet" href="css/gameNight.css" type="text/css"/>
+                    <title>User Page</title>
+                    </head>
+                    <body>
+                        <div class="container">
+                            <h1>Game Night</h1>
+                            <hr/>
+                            <div class="navbar">
+                                <ul class="nav nav-tabs">
+                                    <li role="presentation" class="nav-item">
+                                        <a class="nav-link" href="home">
+                                            Home
+                                        </a>
+                                    </li>
+                                    <div sec:authorize="hasRole('ROLE_USER')">
+                                        <li role="presentation" class="nav-item">
+                                            <a class="nav-link active" href="user">
+                                                User (must have the user role).
+                                            </a>
+                                        </li>
+                                    </div>
+                                    <div sec:authorize="hasRole('ROLE_ADMIN')">
+                                        <li role="presentation" class="nav-item">
+                                            <a class="nav-link" href="admin">
+                                                Admin (must have the admin role)
+                                            </a>
+                                        </li>
+                                    </div>
+                                </ul>    
+                            </div>
+                            <h2>User Page</h2>
+                            <div sec:authorize="isAuthenticated()">
+                                <form class="form-inline" 
+                                      method="POST" 
+                                      action="/logout">
+                                    <input type="hidden" 
+                                           th:name="${_csrf.parameterName}" 
+                                           th:value="${_csrf.token}"/>
+                                    <label for="submit">
+                                        Hello : <span th:text="${#authentication.name}">
+                                        </span>&nbsp;&nbsp;&nbsp;|
+                                    </label>
+                                    <button class="btn btn-link link-color" 
+                                            id="submit" 
+                                            type="submit">Logout</button>
+                                </form>
+                            </div>
+                            <!--                            <h3>Character Management</h3>
+                                                        <p>USER ROLE VIEW BELOW</p>-->
+
+                            <div class="row m-4">
+                                <div class="col text-center ">
+                                    <h1><a href="/" class="text-dark">Game Night Manager: User</a></h1>
+                                </div>
+                            </div>
+                            <div class="row m-4 border border-dark">
+                                <div class="col text-center m-3">
+                                    <a href="characters" class="btn btn-outline-primary btn-lg">Characters</a>
+                                </div>
+                                <div class="col text-center m-3">
+                                    <a href="games" class="btn btn-outline-primary btn-lg">Games</a>
+                                </div>
+                                <div class="col text-center m-3">
+                                    <a href="groups" class="btn btn-outline-primary btn-lg">Groups</a>
+                                </div>
+                            </div>
+
+
+                            <div class ="col-12 m-1 text-center"
+                                 th:if="${errors!=null && !errors.isEmpty()}">
+                                <p class="alert alert-danger" th:each="error: ${errors}"
+                                   th:text="${error.message}">Error message</p>
+                            </div>
+
+
+                            <div class="row m-12 border border-dark">
+                                <div class="col-12 text-center m-3">All Characters</div>
+                                <table class="col-12 table table-striped">
+                                    <thead>
+                                        <tr>
+                                            <th>Character Photo</th>
+                                            <th>Character ID</th>
+                                            <th>Name</th>
+                                            <th>Description</th>
+                                            <th>Type</th>
+                                            <th>Level</th>
+                                            <th>Special Ability</th>
+                                            <th>Equipment</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr th:each="character : ${characters}">
+                                            <td> <img th:src="${character.imagePath}" height="42" width="42"/></td>
+                                            <td th:text="${character.characterId}">Character ID</td>
+                                            <td th:text="${character.name}">Character Name</td>
+                                            <td th:text="${character.description}">Character Description</td>
+                                            <td th:text="${character.type}">Character Type</td>
+                                            <td th:text="${character.level}">Character Level</td>
+                                            <td th:text="${character.specialAbility}">Character Special Ability</td>
+                                            <td th:text="${character.equipment}">Character Equipment</td>
+                                            <td><a href="#" th:href="@{/editCharacter(characterID=${character.characterId})}">Edit</a></td>
+                                            <td><a href="#" th:href="@{/deleteCharacter(characterId=${character.characterId})}">Delete</a></td>
+                                            <td><a href="#" th:href="@{/displayCharacter(characterId=${character.characterId})}">Details</a></td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+
+                            </div>
+
+                            <div class="container">
+
+                                <div class="row m-4 border border-dark">
+                                    <div class="col-3 text-center m-3">
+                                        <span class="h3">Add Character</span>
+                                    </div>
+                                    <div class="col-7 text-center m-3">
+                                        <form action="addCharacter" method="POST" enctype="multipart/form-data">
+
+                                            <div class="form-group row">
+                                                <label for="name" class="col-3 col-form-label">
+                                                    Name</label>
+                                                <div class="col-9">
+                                                    <input type="text" name="name" 
+                                                           id="name" class="form-control" th:value="${name}"/>
+                                                </div>
+                                            </div>
+
+                                            <div class="form-group row">
+                                                <label for="description" class="col-3 col-form-label">
+                                                    Description</label>
+                                                <div class="col-9">
+                                                    <input type="text" name="description" 
+                                                           id="description" class="form-control" th:value="${description}"/>
+                                                </div>
+                                            </div>
+
+                                            <div class="form-group row">
+                                                <label for="type" class="col-3 col-form-label">
+                                                    Type</label>
+                                                <div class="col-9">
+                                                    <input type="text" name="type" 
+                                                           id="type" class="form-control" th:value="${type}"/>
+                                                </div>
+                                            </div>
+
+                                            <div class="form-group row">
+                                                <label for="level" class="col-3 col-form-label">
+                                                    Level</label>
+                                                <div class="col-9">
+                                                    <input type="text" name="level" 
+                                                           id="level" class="form-control" th:value="${level}"/>
+                                                </div>
+                                            </div>
+
+                                            <div class="form-group row">
+                                                <label for="specialAbility" class="col-3 col-form-label">
+                                                    Special Ability</label>
+                                                <div class="col-9">
+                                                    <input type="text" name="specialAbility" 
+                                                           id="specialAbility" class="form-control" th:value="${specialAbility}"/>
+                                                </div>
+                                            </div>
+
+                                            <div class="form-group row">
+                                                <label for="equipment" class="col-3 col-form-label">
+                                                    Equipment</label>
+                                                <div class="col-9">
+                                                    <input type="text" name="equipment" 
+                                                           id="equipment" class="form-control" th:value="${equipment}"/>
+                                                </div>
+                                            </div>
+
+
+                                            <div>
+                                                <!--                                                <form role="form" method="POST" 
+                                                                                                      action="addPicture" 
+                                                                                                      enctype="multipart/form-data">-->
+                                                <input type="hidden" 
+                                                       th:name="${_csrf.parameterName}" 
+                                                       th:value="${_csrf.token}"/>
+                                                <div class="form-group">
+                                                    <label for="picture">Upload File:</label> 
+                                                    <input type="file" 
+                                                           id="picture" 
+                                                           name="picture"/>
+                                                </div>
+                                                <!--                                                    <input type="submit" value="Upload Picture"/>-->
+                                                <!--                                                </form>-->
+                                            </div>
+
+
+                                            <input type="hidden" 
+                                                   th:name="${_csrf.parameterName}" 
+                                                   th:value="${_csrf.token}"/>
+
+                                            <button type="submit" class="btn btn-primary">Add Character</button>
+                                        </form>
+                                    </div>
+                                </div>                        
+                            </div> 
+
+
+                            <p>USER ROLE VIEW ABOVE</p>
+
+                            <div sec:authorize="hasRole('ROLE_ADMIN')">
+                                <h3>Administrative Functions</h3>
+                                <p>
+                                    This is only visible to users who also have the ADMIN role.
+                                </p>
+                            </div>
+                        </div>
+
+                        <!-- Optional JavaScript -->
+                        <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+                        <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+                        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
+                        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
+                    </body>
+                    </html>

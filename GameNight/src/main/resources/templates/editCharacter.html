@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+    <head>
+        <!-- Required meta tags -->
+        <meta charset="utf-8"/>
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/>
+
+        <!-- Bootstrap CSS -->
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous"/>
+        <link rel="stylesheet" href="css/gameNight.css" type="text/css"/>
+
+    <title>Edit Character</title>
+
+    </head>
+
+    <body>
+        <div class="col-12 m-1 text-center" th:if="${errors!=null && !errors.iseEmpty()}">
+            <p class="alert alert-danger" th:each="error: ${errors}" th:text="${error.message}">Error Message</p>
+        </div>
+        <div class="container">
+            <div class="row m-4">
+                <div class="col text-center border border-dark">
+                    <h1>Character Manager</h1>
+                </div>
+            </div>
+            <div>
+                <h2>Character Data Form Below Here</h2>
+            </div>
+            </div>
+        </div>
+    </body>
+
+</html>
