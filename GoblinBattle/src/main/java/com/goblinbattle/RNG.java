@@ -9,7 +9,7 @@ import java.util.Random;
 
 /**
  *
- * @author dsmelser
+ * @author alexbarrett
  */
 public class RNG {
     private static Random generator = new Random();
